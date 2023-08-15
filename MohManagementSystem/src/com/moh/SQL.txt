@@ -1,0 +1,43 @@
+
+Jdbc DB = new Jdbc();
+
+java.sql.ResultSet stk = DB.getdata("select * from stock where stockID='"+stockID+"'");
+while(stk.next())
+{
+	stock = Double.valueOf(stk.getString("amount"));
+}
+
+
+java.sql.ResultSet AB = DB.getdata("select * from accountbalance where accountBalanceID='"+accountBalanceID+"'");
+while(AB.next())
+{
+	accountBalance = Double.valueOf(AB.getString("AccountBalance"));
+	stockID = Integer.valueOf(AB.getString("Stock_stockID"));
+	groupStockID = Integer.valueOf(AB.getString("GroupStock_groupStockID"));
+	mandatoryID = Integer.valueOf(AB.getString("Mandatory_mandatoryID"));
+}
+
+
+DB.putdata("insert into deposit values('"+AGnum+"','"+amount+"',1,'"+details+"','"+depoName+"','"+depoNIC+"','"+times+"','"+accountnum+"','"+empID+"')");
+
+
+DB.putdata("update temporarystock set amount='"+amount+"', dateAndTime='"+times+"' where temporaryStockID='"+tempBalaID+"'");
+
+
+
+
+
+// insert into Another methode
+
+String sql = " insert into users (first_name, last_name, date_created, is_admin, num_points)" + " values (?, ?, ?, ?, ?)";
+
+PreparedStatement preparedStmt = conn.prepareStatement(sql);
+  preparedStmt.setString (1, s.first_name);
+  preparedStmt.setString (2, s.last_name);
+  preparedStmt.setDate   (3, s.date_created);
+  preparedStmt.setBoolean(4, s.is_admin);
+  preparedStmt.setInt    (5, s.num_points);
+
+ preparedStmt.execute();
+
+ conn.close();
